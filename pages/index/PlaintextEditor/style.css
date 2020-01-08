@@ -11,8 +11,8 @@
 }
 .fileTextArea{
   width: 100%;
-    /* color: red; */
-    height: 100%;
-    border: none;
-    outline: 0;
+  height: 100%;
+  border: none;
+  outline: 0;
+  resize: none;
 }

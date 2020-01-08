@@ -33,7 +33,7 @@ function PlaintextEditor({ file, write }) {
     // step 4: create a new file with the updated text and lastModified date
     let tempFile = new File(
       [event.target.value],
-      "/plain.txt",
+      file.name,
       {
         type: "text/plain",
         lastModified: new Date(),
@@ -44,7 +44,7 @@ function PlaintextEditor({ file, write }) {
   }
   return (
     <div className={css.editor}>
-      <h3>{file.name}</h3>
+      <h3>{file.name.substr(1)}</h3>
       <textarea
         className={css.fileTextArea}
         value={fileText} 
