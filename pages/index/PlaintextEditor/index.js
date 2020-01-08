@@ -10,6 +10,7 @@ could be improved in a number of ways if I had more time:
 */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+var piglatin = require('piglatin');
 
 import css from "./style.css";
 
@@ -17,10 +18,14 @@ import css from "./style.css";
 function PlaintextEditor({ file, write }) {
   console.log(file, write);
   const [fileText, setFileText] = useState("")
+  const [previousFileText, setPreviousFileText] = useState("")
+  const [pigLatin, setPigLatin] = useState(false);
   useEffect(() => {
+    console.log(piglatin("this is a test"));
     // step 1: extract the text from the file
     async function getFileText(){
       var text = await file.text();
+      setPreviousFileText(text);
       setFileText(text); // step 2: make a copy of that value to state
     }
     getFileText();
@@ -28,11 +33,15 @@ function PlaintextEditor({ file, write }) {
 
   // called whenever the user edits the text
   function handleTextChanged(event){
+    let inputValue = event.target.value;
+
     // step 3: update state when the user edits text
-    setFileText(event.target.value);
+    console.log("pig latin ", pigLatin)
+    console.log(typeof inputValue)
+    setFileText(pigLatin?piglatin(inputValue):inputValue);
     // step 4: create a new file with the updated text and lastModified date
     let tempFile = new File(
-      [event.target.value],
+      [fileText],
       file.name,
       {
         type: "text/plain",
@@ -44,7 +53,24 @@ function PlaintextEditor({ file, write }) {
   }
   return (
     <div className={css.editor}>
-      <h3>{file.name.substr(1)}</h3>
+      <div className={css.fileInfoHeader}>
+        <h3>{file.name.substring(1)}</h3>
+        <div className="rightSideButtons">
+          <button
+            onClick={(e)=>{
+              e.preventDefault();
+              console.log(pigLatin);
+              if(!pigLatin){
+                setFileText(piglatin(fileText));
+              }
+              else{
+                setFileText(previousFileText);
+              }
+              setPigLatin(!pigLatin);
+            }}
+          >pig latin</button>
+        </div>
+      </div>
       <textarea
         className={css.fileTextArea}
         value={fileText} 

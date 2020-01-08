@@ -8,6 +8,8 @@
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",
     "next": "^9.1.7",
+    "pig-latin": "^2.0.2",
+    "piglatin": "^0.1.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
