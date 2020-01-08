@@ -1,8 +1,7 @@
 export function listFiles() {
   const noteForWill = new File(
-    [`
-
-Hi Will, 
+    [
+`Hi Will, 
 
 This was the simplest way to implement a plain text editor. 
 
