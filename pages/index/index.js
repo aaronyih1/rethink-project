@@ -24,6 +24,10 @@ const TYPE_TO_ICON = {
 };
 
 function FilesTable({ files, activeFile, setActiveFile }) {
+  // sort the files so that they show up by most recently edited, this should probably be done with the SQL Query
+  const sortedFiles = [...files].sort((a, b) => {
+    return b.lastModified - a.lastModified;
+  });
   return (
     <div className={css.files}>
       <table>
@@ -34,35 +38,37 @@ function FilesTable({ files, activeFile, setActiveFile }) {
           </tr>
         </thead>
         <tbody>
-          {files.map(file => (
-            <tr
-              key={file.name}
-              className={classNames(
-                css.row,
-                activeFile && activeFile.name === file.name ? css.active : ""
-              )}
-              onClick={() => setActiveFile(file)}
-            >
-              <td className={css.file}>
-                <div
-                  className={css.icon}
-                  dangerouslySetInnerHTML={{
-                    __html: TYPE_TO_ICON[file.type]
-                  }}
-                ></div>
-                {path.basename(file.name)}
-              </td>
+          {
+            sortedFiles
+            .map(file => (
+              <tr
+                key={file.name}
+                className={classNames(
+                  css.row,
+                  activeFile && activeFile.name === file.name ? css.active : ""
+                )}
+                onClick={() => setActiveFile(file)}
+              >
+                <td className={css.file}>
+                  <div
+                    className={css.icon}
+                    dangerouslySetInnerHTML={{
+                      __html: TYPE_TO_ICON[file.type]
+                    }}
+                  ></div>
+                  {path.basename(file.name)}
+                </td>
 
-              <td>
-                {file.lastModifiedDate.toLocaleDateString("en-US", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric"
-                })}
-              </td>
-            </tr>
-          ))}
+                <td>
+                  {file.lastModifiedDate.toLocaleDateString("en-US", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                  })}
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

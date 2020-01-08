@@ -24,7 +24,7 @@ function PlaintextEditor({ file, write }) {
       setFileText(text); // step 2: make a copy of that value to state
     }
     getFileText();
-  }, []);
+  }, [file]);
 
   // called whenever the user edits the text
   function handleTextChanged(event){
