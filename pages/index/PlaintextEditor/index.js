@@ -12,9 +12,8 @@ function PlaintextEditor({ file, write }) {
   const [previousFileText, setPreviousFileText] = useState("")
   const [pigLatin, setPigLatin] = useState(false);
   const [definition,setDefinition] = useState("");
-  const fooRef = useRef(null)
+
   useEffect(() => {
-    console.log(piglatin("this is a test"));
     // step 1: extract the text from the file
     async function getFileText(){
       var text = await file.text();
@@ -81,6 +80,7 @@ function PlaintextEditor({ file, write }) {
           setDefinition("")
         }
         onSelect={async()=>{
+          // Get selected word and send to words api
           let selectedWord = window.getSelection().toString();
           if(selectedWord.length>0){
             const response = await fetch("https://wordsapiv1.p.mashape.com/words/"+selectedWord, {
@@ -92,7 +92,6 @@ function PlaintextEditor({ file, write }) {
               }
             });
             let wordData = await response.json();
-            console.log(wordData)
             if(typeof wordData.results != "undefined"){
               setDefinition(selectedWord+" : "+wordData.results[0].definition)
             }
