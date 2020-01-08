@@ -16,3 +16,22 @@
   outline: 0;
   resize: none;
 }
+.fileInfoHeader{
+  width:100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filterButton{
+  cursor: pointer;
+  border: none;
+  background-color: #1F52F1;
+  color: #fff;
+  padding: 10px 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.filterButton:hover{
+  background-color: #142f82;
+  transition: background-color 0.2s ease;
+}
